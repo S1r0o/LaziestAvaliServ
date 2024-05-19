@@ -17,7 +17,7 @@ app.post('/application', async (req, res) => {
   const body = JSON.stringify(req.body, null, 4)
   const fileName = `${uuidv4()}.json`
   const filePath = path.resolve(__dirname, 'applications', fileName)
-  await fs.writeFile(fileName, body)
+  await fs.writeFile(filePath, body)
   res.json({response: 'ok'})
 })
 
