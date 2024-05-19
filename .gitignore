@@ -229,4 +229,6 @@ fabric.properties
 !.idea/codeStyles
 !.idea/runConfigurations
 
+applications
+
 # End of https://www.toptal.com/developers/gitignore/api/node,phpstorm+all
