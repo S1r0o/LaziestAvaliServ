@@ -1,6 +1,7 @@
 import express from 'express'
 import fs from 'fs/promises'
 import fsSync from 'fs'
+import cors from 'cors'
 import path from 'path'
 
 import {fileURLToPath} from 'url'
@@ -13,6 +14,7 @@ const __dirname = path.dirname(__filename)
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 
 app.post('/application', async (req, res) => {
   try {
