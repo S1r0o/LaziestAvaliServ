@@ -1,5 +1,6 @@
 import express from 'express'
 import fs from 'fs/promises'
+import fsSync from 'fs'
 import path from 'path'
 
 import {fileURLToPath} from 'url'
@@ -14,11 +15,19 @@ const app = express()
 app.use(express.json())
 
 app.post('/application', async (req, res) => {
-  const body = JSON.stringify(req.body, null, 4)
-  const fileName = `${uuidv4()}.json`
-  const filePath = path.resolve(__dirname, 'applications', fileName)
-  await fs.writeFile(filePath, body)
-  res.json({response: 'ok'})
+  try {
+    const body = JSON.stringify(req.body, null, 4)
+    const fileName = `${uuidv4()}.json`
+    const dirPath = path.resolve(__dirname, 'applications')
+    if (!fsSync.existsSync(dirPath)) {
+      await fs.mkdir(dirPath)
+    }
+    const filePath = path.resolve(dirPath, fileName)
+    await fs.writeFile(filePath, body)
+    res.json({response: 'ok'})
+  } catch (err) {
+    res.status(500).json({response: err.message})
+  }
 })
 
 app.listen(3000, () => {
